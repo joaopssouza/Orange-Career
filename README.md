@@ -30,7 +30,7 @@ Este repositorio existe para facilitar o encontro de oportunidades de carreira d
 Crie um arquivo `.env` local (nao commitar) com base em `.env.example`:
 
 ```
-GOOGLE_CREDENTIALS_BASE64=
+GOOGLE_CREDENTIALS=
 GOOGLE_SHEET_ID=
 SEATALK_WEBHOOK_URL=
 SEATALK_WEBHOOK_SIGNATURE=
@@ -39,9 +39,11 @@ ATS_URL_TEMPLATE=
 CITIES=betim,belo horizonte,contagem
 ```
 
-### Credenciais do Google Sheets via Base64
+### Credenciais do Google Sheets
 
-O JSON da conta de servico deve ficar fora do repositorio. Gere a string base64 e coloque em `GOOGLE_CREDENTIALS_BASE64`.
+O JSON da conta de serviço deve ficar fora do repositório. Coloque o JSON bruto na variável `GOOGLE_CREDENTIALS` (recomendado) no seu `.env` local e, para execução no GitHub Actions, defina o Secret `GOOGLE_CREDENTIALS` com o conteúdo do JSON.
+
+Para compatibilidade, a aplicação também aceita `GOOGLE_CREDENTIALS_BASE64` (string base64 do JSON). Se você preferir armazenar a credencial como base64, defina o Secret `GOOGLE_CREDENTIALS_BASE64` em vez de `GOOGLE_CREDENTIALS`.
 
 ## Instalacao
 
@@ -67,7 +69,7 @@ Quando uma vaga some da API e o ciclo termina sem erro de consulta, ela é marca
 Crie estes Secrets em `Settings > Secrets and variables > Actions`:
 
 - `ATS_URL_TEMPLATE`
-- `GOOGLE_CREDENTIALS_BASE64`
+- `GOOGLE_CREDENTIALS` (ou `GOOGLE_CREDENTIALS_BASE64` como alternativa)
 - `GOOGLE_SHEET_ID`
 - `TELEGRAM_BOT_TOKEN`
 - `TELEGRAM_CHAT_ID`

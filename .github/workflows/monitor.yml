@@ -20,6 +20,9 @@ jobs:
       - name: Run monitor
         env:
           ATS_URL_TEMPLATE: ${{ secrets.ATS_URL_TEMPLATE }}
+          # Prefer the raw JSON secret `GOOGLE_CREDENTIALS` (recommended).
+          # For compatibility, keep `GOOGLE_CREDENTIALS_BASE64` as an alternative.
+          GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
           GOOGLE_CREDENTIALS_BASE64: ${{ secrets.GOOGLE_CREDENTIALS_BASE64 }}
           GOOGLE_SHEET_ID: ${{ secrets.GOOGLE_SHEET_ID }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
