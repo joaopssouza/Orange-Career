@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import os
+import base64
 
 from dotenv import load_dotenv
 
@@ -47,11 +48,23 @@ def _parse_cities(value: str) -> list[str]:
 
 def load_settings() -> Settings:
     cities_value = _get_env("CITIES", "betim,belo horizonte,contagem")
+    # Support either a raw JSON credentials in GOOGLE_CREDENTIALS or
+    # a base64-encoded JSON in GOOGLE_CREDENTIALS_BASE64. If both are
+    # present, GOOGLE_CREDENTIALS takes precedence.
+    google_credentials_raw = os.getenv("GOOGLE_CREDENTIALS", "").strip()
+    google_credentials_b64_env = _get_env("GOOGLE_CREDENTIALS_BASE64", "")
+
+    if google_credentials_raw:
+        google_credentials_base64 = base64.b64encode(
+            google_credentials_raw.encode("utf-8")
+        ).decode("utf-8")
+    else:
+        google_credentials_base64 = google_credentials_b64_env
 
     return Settings(
         ats_url_template=_get_env("ATS_URL_TEMPLATE", ""),
         cities=_parse_cities(cities_value),
-        google_credentials_base64=_get_env("GOOGLE_CREDENTIALS_BASE64", ""),
+        google_credentials_base64=google_credentials_base64,
         google_sheet_id=_get_env("GOOGLE_SHEET_ID", ""),
         sheets_jobs_name=_get_env("SHEETS_JOBS_NAME", "Vagas"),
         sheets_logs_name=_get_env("SHEETS_LOGS_NAME", "Logs"),
