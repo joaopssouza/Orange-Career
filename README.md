@@ -82,9 +82,3 @@ Os valores não sensíveis, como `CITIES`, continuam podendo ficar no próprio w
 ## Segurança
 
 Nao commite segredos ou arquivos de credenciais. Use `.env` localmente e Secrets no GitHub.
-
-Checklist antes de publicar:
-
-- Confirme que `.env`, arquivos `*.json` de credencial, `auth.bat`, `cookies.json`, `download.json`, `chrome_profile/` e `output/` nao estao sendo versionados.
-- Crie os Secrets do GitHub antes de habilitar o workflow.
-- Se alguma credencial real apareceu em diff, rotacione essa credencial antes de publicar.
