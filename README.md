@@ -64,9 +64,9 @@ Veja `.github/workflows/monitor.yml`.
 
 Quando uma vaga some da API e o ciclo termina sem erro de consulta, ela é marcada como `closed` na aba `Vagas` e gera alerta no Telegram/SeaTalk.
 
-### Secrets do repositório
+### Environment secrets
 
-Crie estes Secrets em `Settings > Secrets and variables > Actions`:
+Crie um Environment chamado `env` em `Settings > Environments` e adicione estes Secrets nele:
 
 - `ATS_URL_TEMPLATE`
 - `GOOGLE_CREDENTIALS` (ou `GOOGLE_CREDENTIALS_BASE64` como alternativa)
