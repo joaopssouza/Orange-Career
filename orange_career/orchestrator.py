@@ -67,6 +67,7 @@ def run() -> None:
 
     known_jobs = sheets.get_known_jobs()
     job_statuses = sheets.get_job_statuses()
+    job_names = sheets.get_job_names()
     current_api_jobs: set[str] = set()
     had_api_error = False
 
@@ -107,6 +108,7 @@ def run() -> None:
                 sheets.save_new_job(job_id, job_title, city, summary, source="ats")
                 known_jobs.add(job_id)
                 job_statuses[job_id] = "active"
+                job_names[job_id] = job_title
                 logging.info("Saved job_id=%s city=%s", job_id, city)
             except Exception as exc:
                 logging.exception("Job processing failed job_id=%s", job_id)
@@ -119,7 +121,13 @@ def run() -> None:
     closed_jobs = sheets.get_active_jobs() - current_api_jobs
     for job_id in sorted(closed_jobs):
         if sheets.update_job_status(job_id, "closed"):
-            message = f"**Closed job detected**\n\n**Job ID:** {job_id}\n\nA vaga saiu da API e foi marcada como encerrada."
+            job_name = job_names.get(job_id, "Unknown title")
+            message = (
+                f"**Closed job detected**\n\n"
+                f"**Job ID:** {job_id}\n"
+                f"**Job Name:** {job_name}\n\n"
+                "A vaga saiu da API e foi marcada como encerrada."
+            )
             try:
                 telegram.send_message(message)
                 if seatalk_webhook:

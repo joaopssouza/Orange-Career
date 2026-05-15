@@ -87,6 +87,17 @@ class SheetsClient:
             statuses[job_id] = status
         return statuses
 
+    def get_job_names(self) -> dict[str, str]:
+        rows = self._jobs_ws.get_all_values()
+        names: dict[str, str] = {}
+        for row in rows[1:]:
+            job_id = row[0].strip() if len(row) > 0 and row[0] else ""
+            if not job_id:
+                continue
+            job_name = row[1].strip() if len(row) > 1 and row[1] else "Unknown title"
+            names[job_id] = job_name
+        return names
+
     def save_new_job(
         self,
         job_id: str,
