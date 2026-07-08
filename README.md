@@ -45,7 +45,7 @@ O JSON da conta de serviço deve ficar fora do repositório. Coloque o JSON brut
 
 Para compatibilidade, a aplicação também aceita `GOOGLE_CREDENTIALS_BASE64` (string base64 do JSON). Se você preferir armazenar a credencial como base64, defina o Secret `GOOGLE_CREDENTIALS_BASE64` em vez de `GOOGLE_CREDENTIALS`.
 
-## Instalacao
+## Instalações 
 
 ```
 pip install -r requirements.txt
